@@ -2,8 +2,7 @@ pub mod lassie_client;
 pub mod server;
 pub mod utils;
 use crate::server::handlers::{handle_import_cid, handle_status};
-use axum::{routing::get, Json, Router};
-use serde_json::{json, Value};
+use axum::{routing::get, Router};
 
 // let cid = "bafybeib36krhffuh3cupjml4re2wfxldredkir5wti3dttulyemre7xkni";
 

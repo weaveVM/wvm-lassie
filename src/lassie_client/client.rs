@@ -1,5 +1,7 @@
-use anyhow::{Error, Ok};
+use anyhow::Error;
+use iroh_car::CarReader;
 use lassie::{Daemon, DaemonConfig};
+use std::io::Cursor;
 use std::io::Read;
 use std::sync::Arc;
 use tokio;
@@ -21,7 +23,7 @@ impl LassieClient {
         let port = self.port;
         let url = format!("http://127.0.0.1:{port}/ipfs/{cid}");
 
-        tokio::task::spawn_blocking(move || {
+        let content = tokio::task::spawn_blocking(move || {
             let response = ureq::get(&url)
                 .set("Accept", "application/vnd.ipld.car")
                 .call()?;
@@ -31,9 +33,23 @@ impl LassieClient {
                 .into_reader()
                 .read_to_end(&mut content)
                 .expect("cannot read response body");
-            Ok(content)
+            anyhow::Ok(content)
         })
-        .await?
-        .map_err(Into::into)
+        .await??;
+
+        let decoded_content = decode_ipld_to_bytes(content).await?;
+        Ok(decoded_content)
+    }
+}
+
+async fn decode_ipld_to_bytes(data: Vec<u8>) -> Result<Vec<u8>, Error> {
+    let mut cursor = Cursor::new(&data);
+    let mut car_reader = CarReader::new(&mut cursor).await.unwrap();
+
+    // gets the first block's data without any assumptions about format
+    if let Some(block) = car_reader.next_block().await.unwrap() {
+        Ok(block.1)
+    } else {
+        Ok(data)
     }
 }
