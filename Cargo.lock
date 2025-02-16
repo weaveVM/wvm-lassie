@@ -2682,8 +2682,11 @@ dependencies = [
 name = "wvm-lassie"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "axum 0.7.9",
  "lassie",
+ "serde",
+ "serde_json",
  "shuttle-axum",
  "shuttle-runtime",
  "tokio",

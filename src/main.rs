@@ -1,25 +1,16 @@
-use lassie::Daemon;
-use lassie::DaemonConfig;
-use ureq;
-use std::io::Read;
+pub mod lassie_client;
+use axum::{routing::get, Json, Router};
+use lassie_client::client::LassieClient;
+use serde_json::{json, Value};
 
-
-pub fn main() {
-  let daemon = Daemon::start(DaemonConfig::default()).expect("cannot start Lassie");
-  let port = daemon.port();
-
-  let url = format!("http://127.0.0.1:{port}/ipfs/bafybeib36krhffuh3cupjml4re2wfxldredkir5wti3dttulyemre7xkni");
-  println!("{:?}", url);
-  let response = ureq::get(&url)
-      .set("Accept", "application/vnd.ipld.car")
-      .call()
-      .expect("error");
-  
-      let mut content = Vec::new();
-      response
-          .into_reader()
-          .read_to_end(&mut content)
-          .expect("cannot read response body");
-  
-      println!("{:?}", content);
-    }
+pub async fn handle_weave_gm() -> Json<Value> {
+    let client = LassieClient::new();
+    let cid = "bafybeib36krhffuh3cupjml4re2wfxldredkir5wti3dttulyemre7xkni";
+    let data = client.fetch_car(cid).await.unwrap();
+    Json(json!({"data": data}))
+}
+#[shuttle_runtime::main]
+async fn main() -> shuttle_axum::ShuttleAxum {
+    let router = Router::new().route("/", get(handle_weave_gm));
+    Ok(router.into())
+}
