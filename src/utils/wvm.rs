@@ -10,7 +10,10 @@ pub async fn send_envelope(envelope_data: Vec<u8>) -> Result<String, Error> {
     let mut envelopes: Vec<Envelope> = vec![];
 
     let tags = vec![
-        // Tag::new("Content-Type".to_string(), "application/octet-stream".to_string()),
+        Tag::new(
+            "Content-Type".to_string(),
+            "application/octet-stream".to_string(),
+        ),
         Tag::new("protocol".to_string(), "filecoin-importer".to_string()),
         Tag::new("client".to_string(), "wvm-lassie".to_string()),
     ];

@@ -12,7 +12,6 @@ async fn main(
 ) -> shuttle_axum::ShuttleAxum {
     // load secrets from Secrets.toml into env var;
     secrets.into_iter().for_each(|(key, val)| {
-        println!("{:?} {:?}", key, val);
         std::env::set_var(key, val);
     });
     let router = Router::new()
