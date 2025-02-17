@@ -7,9 +7,15 @@
 ## About
 `wvm-lassie` is an IPFS/Filecoin data importer to WeaveVM -- make your Filecoin data live forever.
 
+This tool provides a simple ETL to retrieve content from the Filecoin network using CIDs. It spin up a [Lassie daemon](https://github.com/CheckerNetwork/rusty-lassie) for each retrieval request, downloads the content of the CAR file, and then retrieve the IPLD blocks. Then, data is loaded to WeaveVM tagged with `application/octet-stream` MIME type.
+
+### Key concepts
+
+- **CID**: Content Identifiers are unique identifiers for content in the Filecoin/IPFS network.
+- **CAR**: Content Addressable aRchives are a format for storing IPLD data.
+- **IPLD**: InterPlanetary Linked Data is the data model used by IPFS and Filecoin.
+
 ## REST API
-
-
 
 ### Import cid
 
