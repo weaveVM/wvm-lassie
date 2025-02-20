@@ -19,7 +19,7 @@ This tool provides a simple ETL to retrieve content from the Filecoin network us
 
 ### Import cid
 
-- API endpoint: (159.65.81.229)[http://159.65.81.229/]
+- API endpoint: (filecoin.wvm.network)[http://filecoin.wvm.network]
 
 ```bash
 GET /import/:cid
