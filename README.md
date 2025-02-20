@@ -19,7 +19,7 @@ This tool provides a simple ETL to retrieve content from the Filecoin network us
 
 ### Import cid
 
-- API endpoint: (filecoin.wvm.network)[http://filecoin.wvm.network]
+- API endpoint: (lassie.wvm.network)[http://lassie.wvm.network]
 
 ```bash
 GET /import/:cid
