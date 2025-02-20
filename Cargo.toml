@@ -17,4 +17,5 @@ bundler = { git = "https://github.com/weaveVM/bundler", branch = "main"}
 dotenv = "0.15.0"
 iroh-car = "0.5.1"
 reqwest = "0.12.12"
+hyper = {version = "1.6.0", features = ["full"]}
 
