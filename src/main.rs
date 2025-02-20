@@ -12,7 +12,7 @@ use tokio::net::TcpListener;
 // let cid = "bafybeib36krhffuh3cupjml4re2wfxldredkir5wti3dttulyemre7xkni";
 #[tokio::main]
 async fn main() -> Result<()> {
-    let port = get_env_key("PORT".to_string()).unwrap_or("3000".to_string()).parse::<u16>()?;
+    let port = get_env_key("PORT".to_string()).unwrap_or("8000".to_string()).parse::<u16>()?;
     let app = Router::new()
         .route("/", get(handle_status))
         .route("/import/:cid", get(handle_import_cid));
